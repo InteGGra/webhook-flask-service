@@ -9,7 +9,7 @@ def sendWebhooks(body, url):
     headers = {"Content-Type": "application/json"}
     data = body
     try:
-        response = requests.post(url, json=data, headers=headers, verify=False, timeout=10)
+        response = requests.post(url, json=data, headers=headers, verify=False, timeout=20)
         print("Webhook de respuesta ha sido enviado a", url, response.json())
     except Exception as e:
         print("Error while sending webhook to endpoint,", e)
