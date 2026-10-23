@@ -55,7 +55,7 @@ def webhook():
             return challenge, 200
         else:
             return "Invalid token", 403
-    
+
     # Request POST para leer los webhooks entrantes.
     if request.method == "POST":
         # Imprime todos los Webhooks en consola.
@@ -78,15 +78,11 @@ def webhook():
                 sender = msg["from"]
                 msg_type = msg["type"]
 
-                # SOLO SE ENVÍAN WEBHOOKS DE TIPO "BUTTON" CUALQUIER OTRO TIPO SE REGISTRA Y SE OMITE.
-                if msg_type != "button":
-                    return "EVENT_RECEIVED", 200
-
-                # ENVÍO DE WEBHOOKS A ENDPOINT PARA MENSAJES DE BOTÓN
+                # ENVÍO DE WEBHOOKS A ENDPOINT PARA MENSAJES DE TEXTO Y BOTÓN
                 try:
                     metadata = value.get("metadata", {})
                     display_phone_number = metadata.get("display_phone_number")
-                    
+
                     if display_phone_number:
                         endpoint_url = get_endpoint_from_database(display_phone_number)
                         if endpoint_url:
@@ -98,12 +94,12 @@ def webhook():
                     else:
                         print(f"No se encontró un 'display_phone_number' en el webhook.")
                 except Exception as e:
-                    print(f"Error procesando webhook de {msg_type}: {e}")            
+                    print(f"Error procesando webhook de {msg_type}: {e}")
         except Exception as e:
             print("Error en flujo de WhatsApp:", e)
 
         return "EVENT_RECEIVED", 200
-    
+
 # Programa principal.
 if __name__ == "__main__":
     import os
