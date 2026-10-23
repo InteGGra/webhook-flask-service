@@ -78,7 +78,11 @@ def webhook():
                 sender = msg["from"]
                 msg_type = msg["type"]
 
-                # ENVÍO DE WEBHOOKS A ENDPOINT PARA MENSAJES DE TEXTO Y BOTÓN
+                # SOLO SE ENVÍAN WEBHOOKS DE TIPO "BUTTON" CUALQUIER OTRO TIPO SE REGISTRA Y SE OMITE.
+                if msg_type != "button":
+                    return "EVENT_RECEIVED", 200
+
+                # ENVÍO DE WEBHOOKS A ENDPOINT PARA MENSAJES DE BOTÓN
                 try:
                     metadata = value.get("metadata", {})
                     display_phone_number = metadata.get("display_phone_number")
