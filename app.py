@@ -92,7 +92,6 @@ def webhook():
                         if endpoint_url:
                             endpoint_url = endpoint_url.rstrip()
                             sendWebhooks(body, endpoint_url) # El Webhook es enviado a su EndPoint.
-                            print(f"Webhook de {msg_type} enviado a endpoint para {display_phone_number}")
                         else:
                             print(f"No se consiguió endpoint en BD para este número emisor: {display_phone_number}")
                     else:
